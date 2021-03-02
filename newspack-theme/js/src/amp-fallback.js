@@ -6,7 +6,7 @@
 
 ( function() {
 	// Shared variables
-	const body = document.getElementsByTagName( 'body' )[ 0 ],
+	const body = document.body,
 		headerContain = document.getElementById( 'masthead' );
 
 	// Search toggle.
@@ -165,33 +165,26 @@
 		( body.classList.contains( 'single-featured-image-behind' ) ||
 			body.classList.contains( 'single-featured-image-beside' ) )
 	) {
-		let scrollTimer,
-			lastScrollFireTime = 0;
+		let currentRequest;
 
-		window.onscroll = function() {
-			toggleHeaderClass();
-		};
+		window.addEventListener( 'scroll', () => {
+			const scrollBarPosition = window.pageYOffset;
+			const remove = 200 >= scrollBarPosition;
+
+			// Don't try to animate faster than the browser can repaint.
+			if ( currentRequest ) {
+				window.cancelAnimationFrame( currentRequest );
+			}
+
+			currentRequest = window.requestAnimationFrame( () => toggleHeaderClass( remove ) );
+		} );
 
 		/**
 		 * @description Limit onscroll checkes and add CSS class when scrolled least 200px down the page.
 		 */
-		function toggleHeaderClass() {
-			const scrollBarPosition = window.pageYOffset,
-				minScrollTime = 100,
-				now = new Date().getTime();
-
-			if ( ! scrollTimer ) {
-				if ( now - lastScrollFireTime > 3 * minScrollTime ) {
-					lastScrollFireTime = now;
-				}
-				scrollTimer = setTimeout( function() {
-					scrollTimer = null;
-					lastScrollFireTime = new Date().getTime();
-				}, minScrollTime );
-			}
-
+		function toggleHeaderClass( remove = false ) {
 			// At specifiv position do what you want
-			if ( 200 >= scrollBarPosition ) {
+			if ( remove ) {
 				headerContain.classList.remove( 'head-scroll' );
 			} else {
 				headerContain.classList.add( 'head-scroll' );
