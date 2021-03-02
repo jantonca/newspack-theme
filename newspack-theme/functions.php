@@ -470,7 +470,7 @@ function newspack_sticky_header_amp_animation() {
 				array(
 					'selector'  => '#masthead .sticky-bg',
 					'keyframes' => array(
-						'opacity' => 0.7,
+						'opacity' => 0.6,
 					),
 				),
 			),

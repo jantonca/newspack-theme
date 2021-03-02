@@ -96,10 +96,10 @@ body:not( .h-stk ) .site-breadcrumb {
 }
 
 .site-header,
-.h-db .middle-header-contain, // Header default background
-.h-sh.h-db .site-header, // Header short height; header default background
-body:not( .h-sb ) .site-header {
-	// Not Header solid background
+ // Header default background
+.h-db .middle-header-contain,
+// Header short header, default background
+.h-sh.h-db .site-header {
 	background-color: #efefef;
 }
 
@@ -163,8 +163,7 @@ body:not( .h-sb ) .site-header {
 		&.h-sub.h-db,
 		&.h-sub.h-sb {
 			.site-header,
-			.middle-header-contain,
-			&:not( .h-sb ) .site-header {
+			.middle-header-contain {
 				background: transparent;
 			}
 		}
